@@ -31,10 +31,19 @@ export default function HomePage() {
   const [pwErr, setPwErr] = useState(false)
   const [authed, setAuthed] = useState(false)
 
-  const handleAdminClick = () => {
+  const handleAdminOpen = () => {
     if (authed) setAdminOpen(true)
     else setPwPrompt(true)
   }
+
+  // Secret keyboard shortcut: Ctrl + Shift + A
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') handleAdminOpen()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [authed])
 
   const handlePwSubmit = () => {
     if (pw === ADMIN_PASSWORD) {
@@ -48,12 +57,10 @@ export default function HomePage() {
     }
   }
 
-  // Split headline on | for line break / italic second line
   const headlineParts = hero.headline.split('|')
 
   return (
     <>
-      {/* Seasonal banner */}
       {hero.showBanner === 'yes' && hero.banner && (
         <div className={styles.banner}>{hero.banner}</div>
       )}
@@ -61,7 +68,6 @@ export default function HomePage() {
         <div className={styles.calloutBar}>⚠️ {hero.callout}</div>
       )}
 
-      {/* Hero */}
       <div className={styles.hero}>
         <div className={styles.heroContent}>
           <div className={`${styles.heroEyebrow} fade-in`}>
@@ -92,7 +98,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Features */}
       <Section>
         <SectionLabel>What We Offer</SectionLabel>
         <SectionTitle>More than just a party store.</SectionTitle>
@@ -112,7 +117,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* CTA strip */}
         <div className={styles.ctaStrip}>
           <div>
             <h3 className={styles.ctaHeading}>Hosting a party?</h3>
@@ -126,12 +130,6 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Admin FAB */}
-      <button className={styles.adminFab} onClick={handleAdminClick}>
-        🛠 Admin
-      </button>
-
-      {/* Password prompt */}
       {pwPrompt && (
         <div className={styles.pwBackdrop} onClick={() => { setPwPrompt(false); setPwErr(false); setPw('') }}>
           <div className={styles.pwBox} onClick={(e) => e.stopPropagation()}>

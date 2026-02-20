@@ -1,0 +1,88 @@
+.heroInner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.toastCard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 56px 48px;
+  text-align: center;
+  max-width: 560px;
+  margin: 48px auto 0;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07);
+}
+
+.toastIcon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.toastHeading {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin-bottom: 14px;
+}
+
+.toastBody {
+  color: var(--ink-light);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 32px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toastBtn {
+  font-size: 1rem !important;
+  padding: 16px 40px !important;
+}
+
+.toastNote {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  color: #bbb;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 80px;
+}
+
+.infoCard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+}
+
+.infoIcon {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+}
+
+.infoTitle {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  margin-bottom: 10px;
+}
+
+.infoText {
+  color: var(--ink-light);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 760px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .toastCard {
+    padding: 36px 24px;
+  }
+}

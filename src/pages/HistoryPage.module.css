@@ -1,0 +1,149 @@
+.heroInner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ─── Timeline ───────────────────────────────────── */
+.timeline {
+  position: relative;
+  max-width: 760px;
+  margin: 56px auto 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 88px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.tlItem {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 52px;
+  position: relative;
+}
+
+.tlYear {
+  width: 88px;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--amber);
+  text-align: right;
+  padding-top: 4px;
+  position: relative;
+}
+
+.tlYear::after {
+  content: '';
+  position: absolute;
+  right: -48px;
+  top: 9px;
+  width: 12px;
+  height: 12px;
+  background: var(--amber);
+  border-radius: 50%;
+  border: 3px solid var(--cream);
+}
+
+.tlBody {
+  flex: 1;
+}
+
+.tlTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tlDesc {
+  color: var(--ink-light);
+  font-size: 0.93rem;
+  line-height: 1.75;
+}
+
+/* ─── About strip ────────────────────────────────── */
+.aboutStrip {
+  background: var(--green);
+  border-radius: 12px;
+  padding: 56px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.aboutHeading {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.aboutText p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.93rem;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.statNum {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--amber-light);
+}
+
+.statLabel {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+@media (max-width: 700px) {
+  .timeline::before {
+    left: 0;
+  }
+
+  .tlItem {
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 24px;
+  }
+
+  .tlYear {
+    text-align: left;
+    width: auto;
+  }
+
+  .tlYear::after {
+    left: -24px;
+    right: auto;
+  }
+
+  .aboutStrip {
+    grid-template-columns: 1fr;
+    padding: 36px 24px;
+  }
+}

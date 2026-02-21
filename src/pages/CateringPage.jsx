@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Section, SectionLabel, SectionTitle } from '../components/Section'
-import cateringMenu from '../data/cateringMenu'
+import { api } from '../api/client'
+import cateringFallback from '../data/cateringMenu'
 import styles from './CateringPage.module.css'
 
 export default function CateringPage() {
+  const [categories, setCategories] = useState(cateringFallback)
   const [activeTab, setActiveTab] = useState(0)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    api.getCatering()
+      .then(data => {
+        if (data.categories?.length) setCategories(data.categories)
+      })
+      .catch(() => {}) // falls back to static data
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ minHeight: '100vh', background: 'var(--green)' }} />
 
   return (
     <>
@@ -24,16 +38,12 @@ export default function CateringPage() {
         <SectionTitle>Order in Advance</SectionTitle>
         <p className={styles.intro}>
           Browse by category below. Call{' '}
-          <a href="tel:+17346757006" className={styles.phone}>
-            (734) 675-7006
-          </a>{' '}
-          or stop in to place your catering order. We ask for at least 24 hours notice for all
-          catering items.
+          <a href="tel:+17346757006" className={styles.phone}>(734) 675-7006</a>{' '}
+          or stop in to place your catering order. We ask for at least 24 hours notice.
         </p>
 
-        {/* Tabs */}
         <div className={styles.tabs}>
-          {cateringMenu.map((cat, i) => (
+          {categories.map((cat, i) => (
             <button
               key={cat.category}
               className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
@@ -44,9 +54,8 @@ export default function CateringPage() {
           ))}
         </div>
 
-        {/* Menu items */}
         <div className={styles.menuGrid}>
-          {cateringMenu[activeTab].items.map((item) => (
+          {categories[activeTab]?.items.map((item) => (
             <div key={item.name} className={`${styles.menuItem} fade-in`}>
               <div className={styles.menuInfo}>
                 <div className={styles.menuName}>{item.name}</div>
@@ -57,7 +66,6 @@ export default function CateringPage() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
         <div className={styles.cta}>
           <h3 className={styles.ctaHeading}>Ready to Order?</h3>
           <p className={styles.ctaSub}>

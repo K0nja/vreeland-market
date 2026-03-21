@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Section, SectionLabel, SectionTitle } from '../components/Section'
 import AdminModal from '../components/AdminModal'
+import Gallery from '../components/Gallery'
 import features from '../data/features'
 import { api } from '../api/client'
 import styles from './HomePage.module.css'
@@ -20,16 +21,17 @@ export default function HomePage() {
   const navigate = useNavigate()
   const [hero, setHero] = useState(DEFAULT_HERO)
   const [catering, setCatering] = useState(DEFAULT_CATERING)
+  const [gallery, setGallery] = useState([])
   const [adminOpen, setAdminOpen] = useState(false)
   const [pwPrompt, setPwPrompt] = useState(false)
   const [pw, setPw] = useState('')
   const [pwErr, setPwErr] = useState(false)
   const [authed, setAuthed] = useState(() => !!sessionStorage.getItem('vreeland_token'))
 
-  // Load hero from API
   useEffect(() => {
     api.getHero().then(setHero).catch(() => {})
     api.getCatering().then(setCatering).catch(() => {})
+    api.getGallery().then(setGallery).catch(() => {})
   }, [])
 
   const handleAdminOpen = () => {
@@ -117,6 +119,14 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {gallery.length > 0 && (
+        <Section style={{ background: 'var(--card-bg)' }}>
+          <SectionLabel>Photos</SectionLabel>
+          <SectionTitle>From the Store</SectionTitle>
+          <Gallery photos={gallery} />
+        </Section>
+      )}
+
       {pwPrompt && (
         <div className={styles.pwBackdrop} onClick={() => { setPwPrompt(false); setPwErr(false); setPw('') }}>
           <div className={styles.pwBox} onClick={e => e.stopPropagation()}>
@@ -140,6 +150,7 @@ export default function HomePage() {
         <AdminModal
           hero={hero} setHero={setHero}
           catering={catering} setCatering={setCatering}
+          gallery={gallery} setGallery={setGallery}
           onClose={() => setAdminOpen(false)}
         />
       )}

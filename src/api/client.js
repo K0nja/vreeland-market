@@ -1,30 +1,52 @@
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+import { db } from '../firebase'
+import { ref, get, set } from 'firebase/database'
 
-function authHeaders() {
-  const token = sessionStorage.getItem('vreeland_token')
-  return token ? { Authorization: `Bearer ${token}` } : {}
-}
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
 
-async function request(method, path, body) {
-  const res = await fetch(`${BASE}${path}`, {
-    method,
-    headers: { 'Content-Type': 'application/json', ...authHeaders() },
-    body: body ? JSON.stringify(body) : undefined,
-  })
-  const data = await res.json()
-  if (!res.ok) throw new Error(data.error || 'Request failed')
-  return data
+const DEFAULT_HERO = {
+  headline: "Woodhaven's Favorite|Party Store.",
+  sub: 'Craft beer, fine spirits, fresh deli, and more — all in one spot on Allen Road for over 35 years.',
+  banner: '🍺 Check out our expanded bourbon selection — stop in and ask about our barrel picks!',
+  showBanner: 'yes',
+  callout: '',
 }
 
 export const api = {
-  // Auth
-  login: (password) => request('POST', '/api/auth/login', { password }),
+  // Auth — client-side password check, token stored in sessionStorage
+  login: async (password) => {
+    if (password !== ADMIN_PASSWORD) throw new Error('Incorrect password')
+    const token = btoa(`vreeland:${Date.now()}`)
+    return { token }
+  },
 
   // Hero
-  getHero:    ()     => request('GET',  '/api/hero'),
-  updateHero: (data) => request('PUT',  '/api/hero', data),
+  getHero: async () => {
+    const snapshot = await get(ref(db, 'hero'))
+    return snapshot.exists() ? snapshot.val() : DEFAULT_HERO
+  },
+  updateHero: async (data) => {
+    await set(ref(db, 'hero'), data)
+    return data
+  },
 
   // Catering
-  getCatering:    ()           => request('GET', '/api/catering'),
-  updateCatering: (categories) => request('PUT', '/api/catering', { categories }),
+  getCatering: async () => {
+    const snapshot = await get(ref(db, 'catering'))
+    return snapshot.exists() ? snapshot.val() : { categories: [] }
+  },
+  updateCatering: async (categories) => {
+    const data = { categories }
+    await set(ref(db, 'catering'), data)
+    return data
+  },
+
+  // Gallery
+  getGallery: async () => {
+    const snapshot = await get(ref(db, 'gallery'))
+    return snapshot.exists() ? snapshot.val() : []
+  },
+  updateGallery: async (photos) => {
+    await set(ref(db, 'gallery'), photos)
+    return photos
+  },
 }

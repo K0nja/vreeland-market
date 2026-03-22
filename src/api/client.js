@@ -1,5 +1,6 @@
 import { db } from '../firebase'
 import { ref, get, set } from 'firebase/database'
+import cateringMenu from '../data/cateringMenu'
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
 
@@ -32,7 +33,7 @@ export const api = {
   // Catering
   getCatering: async () => {
     const snapshot = await get(ref(db, 'catering'))
-    return snapshot.exists() ? snapshot.val() : { categories: [] }
+    return snapshot.exists() ? snapshot.val() : { categories: cateringMenu }
   },
   updateCatering: async (categories) => {
     const data = { categories }

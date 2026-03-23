@@ -6,7 +6,7 @@
   z-index: 100;
   background: rgba(28, 28, 28, 0.96);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(200, 146, 42, 0.2);
+  border-bottom: 2px solid var(--red);
   transition: background 0.3s;
   height: var(--nav-height);
 }

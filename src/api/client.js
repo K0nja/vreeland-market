@@ -1,6 +1,15 @@
 import { db } from '../firebase'
 import { ref, get, set } from 'firebase/database'
 import cateringMenu from '../data/cateringMenu'
+import menuData from '../data/menuData'
+
+const DEFAULT_SOCIALS = [
+  { label: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100063559209172' },
+  { label: 'Instagram', url: 'https://www.instagram.com/vreelandmarket' },
+  { label: 'TikTok', url: 'https://www.tiktok.com/@vreeland.market' },
+  { label: 'X / Twitter', url: 'https://x.com/VreelandMarket' },
+  { label: 'YouTube', url: 'https://www.youtube.com/@vreelandmarket8347' },
+]
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
 
@@ -39,6 +48,27 @@ export const api = {
     const data = { categories }
     await set(ref(db, 'catering'), data)
     return data
+  },
+
+  // Menu
+  getMenu: async () => {
+    const snapshot = await get(ref(db, 'menu'))
+    return snapshot.exists() ? snapshot.val() : { categories: menuData }
+  },
+  updateMenu: async (categories) => {
+    const data = { categories }
+    await set(ref(db, 'menu'), data)
+    return data
+  },
+
+  // Socials
+  getSocials: async () => {
+    const snapshot = await get(ref(db, 'socials'))
+    return snapshot.exists() ? snapshot.val() : DEFAULT_SOCIALS
+  },
+  updateSocials: async (socials) => {
+    await set(ref(db, 'socials'), socials)
+    return socials
   },
 
   // Gallery

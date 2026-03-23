@@ -1,5 +1,15 @@
+import { useState, useEffect } from 'react'
 import { Section, SectionLabel, SectionTitle } from '../components/Section'
+import { api } from '../api/client'
 import styles from './ContactPage.module.css'
+
+const DEFAULT_SOCIALS = [
+  { label: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100063559209172' },
+  { label: 'Instagram', url: 'https://www.instagram.com/vreelandmarket' },
+  { label: 'TikTok', url: 'https://www.tiktok.com/@vreeland.market' },
+  { label: 'X / Twitter', url: 'https://x.com/VreelandMarket' },
+  { label: 'YouTube', url: 'https://www.youtube.com/@vreelandmarket8347' },
+]
 
 const HOURS = [
   { day: 'Sunday',    hours: '9:00 AM – 10:00 PM', dayIndex: 0 },
@@ -13,6 +23,11 @@ const HOURS = [
 
 export default function ContactPage() {
   const today = new Date().getDay()
+  const [socials, setSocials] = useState(DEFAULT_SOCIALS)
+
+  useEffect(() => {
+    api.getSocials().then(setSocials).catch(() => {})
+  }, [])
 
   return (
     <>
@@ -60,29 +75,17 @@ export default function ContactPage() {
             </div>
 
             <div className={styles.infoRow}>
-              <span className={styles.infoIcon}>🎥</span>
+              <span className={styles.infoIcon}>📱</span>
               <div>
-                <div className={styles.infoLabel}>YouTube</div>
-                <div className={styles.infoVal}>
-                  <a
-                    href="https://www.youtube.com/@vreelandmarket8347"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.link}
-                  >
-                    @vreelandmarket8347
-                  </a>
+                <div className={styles.infoLabel}>Social Media</div>
+                <div className={styles.socialLinks}>
+                  {socials.filter(s => s.url).map(s => (
+                    <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className={styles.link}>{s.label}</a>
+                  ))}
                 </div>
               </div>
             </div>
 
-            <div className={styles.infoRow}>
-              <span className={styles.infoIcon}>📮</span>
-              <div>
-                <div className={styles.infoLabel}>Post Office</div>
-                <div className={styles.infoVal}>In-store extended-hours US Post Office.</div>
-              </div>
-            </div>
           </div>
 
           {/* Hours */}

@@ -6,8 +6,8 @@ import HomePage from './pages/HomePage'
 import HistoryPage from './pages/HistoryPage'
 import OrderPage from './pages/OrderPage'
 import CateringPage from './pages/CateringPage'
-import DonnyPage from './pages/DonnyPage'
 import ContactPage from './pages/ContactPage'
+import MenuPage from './pages/MenuPage'
 import AdminPage from './pages/AdminPage'
 
 // Scroll to top on every route change
@@ -27,8 +27,8 @@ export default function App() {
           <Route path="/"         element={<HomePage />} />
           <Route path="/history"  element={<HistoryPage />} />
           <Route path="/order"    element={<OrderPage />} />
+          <Route path="/menu"     element={<MenuPage />} />
           <Route path="/catering" element={<CateringPage />} />
-          <Route path="/donny"    element={<DonnyPage />} />
           <Route path="/contact"  element={<ContactPage />} />
           <Route path="/admin"    element={<AdminPage />} />
         </Routes>

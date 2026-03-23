@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: #f5f3ef;
+  background: var(--cream);
 }
 
 .pageHeader {
@@ -190,7 +190,7 @@
 
 /* Catering */
 .catBlock {
-  background: #fafaf8;
+  background: #F8FAFF;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 20px;
@@ -375,7 +375,7 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
-  background: #fafaf8;
+  background: #F8FAFF;
 }
 
 .galleryThumb {

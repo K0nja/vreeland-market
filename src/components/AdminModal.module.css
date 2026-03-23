@@ -139,7 +139,7 @@
 }
 
 .cancel {
-  background: #f0ede8;
+  background: #EEF2FF;
   color: var(--ink);
   border: none;
   font-family: var(--font-body);
@@ -169,7 +169,7 @@
 
 /* ── Catering ── */
 .catBlock {
-  background: #fafaf8;
+  background: #F8FAFF;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px;
@@ -299,7 +299,7 @@
 }
 
 .galleryHint code {
-  background: #f0ede8;
+  background: #EEF2FF;
   border-radius: 3px;
   padding: 1px 5px;
   font-size: 0.8rem;
@@ -375,7 +375,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #fafaf8;
+  background: #F8FAFF;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;

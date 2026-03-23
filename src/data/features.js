@@ -20,14 +20,9 @@ const features = [
     desc: 'Everything you need for your next event — we are a party store, after all.',
   },
   {
-    icon: '📮',
-    title: 'US Post Office',
-    desc: 'Extended-hours post office right inside the store. Convenient for everyday errands.',
-  },
-  {
-    icon: '🛒',
-    title: 'Full Grocery',
-    desc: 'Everyday essentials, snacks, and pantry staples whenever you need them.',
+    icon: '🍕',
+    title: 'Fresh Pizza',
+    desc: 'Hot slices and whole pies made fresh in-store — cheese, pepperoni, deluxe, and more.',
   },
 ]
 

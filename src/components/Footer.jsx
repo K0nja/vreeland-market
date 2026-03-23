@@ -1,8 +1,24 @@
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { NAV_ITEMS } from '../data/navItems'
+import { api } from '../api/client'
 import styles from './Footer.module.css'
 
+const DEFAULT_SOCIALS = [
+  { label: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100063559209172' },
+  { label: 'Instagram', url: 'https://www.instagram.com/vreelandmarket' },
+  { label: 'TikTok', url: 'https://www.tiktok.com/@vreeland.market' },
+  { label: 'X / Twitter', url: 'https://x.com/VreelandMarket' },
+  { label: 'YouTube', url: 'https://www.youtube.com/@vreelandmarket8347' },
+]
+
 export default function Footer() {
+  const [socials, setSocials] = useState(DEFAULT_SOCIALS)
+
+  useEffect(() => {
+    api.getSocials().then(setSocials).catch(() => {})
+  }, [])
+
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
@@ -13,6 +29,13 @@ export default function Footer() {
             <br />
             Largest craft beer &amp; bourbon selection Downriver.
           </p>
+          <div className={styles.socials}>
+            {socials.filter(s => s.url).map((s) => (
+              <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className={styles.socialBtn} title={s.label}>
+                {s.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className={styles.col}>

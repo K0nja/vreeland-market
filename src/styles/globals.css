@@ -1,14 +1,15 @@
 /* ─── CSS Variables ─────────────────────────────────────────────────── */
 :root {
-  --cream: #F8F5EF;
+  --cream: #F7F8FA;
   --white: #FFFFFF;
-  --ink: #1C1C1C;
-  --ink-light: #555555;
-  --amber: #C8922A;
-  --amber-light: #E8B04A;
-  --green: #2B3D2C;
-  --green-light: #3D5C3E;
-  --border: #E0DAD0;
+  --ink: #0A0A0A;
+  --ink-light: #4B5563;
+  --amber: #2563EB;
+  --amber-light: #3B82F6;
+  --green: #111111;
+  --green-light: #222222;
+  --red: #DC2626;
+  --border: #E5E7EB;
   --card-bg: #FFFFFF;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
@@ -144,8 +145,8 @@ img {
 }
 
 .page-hero__eyebrow--amber {
-  background: rgba(200, 146, 42, 0.15);
-  border: 1px solid rgba(200, 146, 42, 0.4);
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.4);
   color: var(--amber);
 }
 

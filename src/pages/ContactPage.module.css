@@ -57,6 +57,12 @@
   font-weight: 600;
 }
 
+.socialLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 /* ─── Hours ──────────────────────────────────────── */
 .hoursTable {
   display: flex;

@@ -1,8 +1,32 @@
 import { Section, SectionLabel, SectionTitle } from '../components/Section'
 import styles from './OrderPage.module.css'
 
-// ← Replace with your actual Toast ordering URL
-const TOAST_URL = 'YOUR_TOAST_URL_HERE'
+const PLATFORMS = [
+  {
+    name: 'Toast',
+    icon: '🍕',
+    desc: 'Order directly through our own Toast page for pickup.',
+    url: 'https://www.toasttab.com/local/order/vreeland-market-26796-allen-rd/r-f58b9129-46b1-4ad9-90a6-22e99344f39a',
+  },
+  {
+    name: 'Grubhub',
+    icon: '🛵',
+    desc: 'Order through Grubhub for delivery or pickup.',
+    url: 'https://www.grubhub.com/restaurant/vreeland-market-26796-allen-rd-woodhaven/1983860',
+  },
+  {
+    name: 'DoorDash',
+    icon: '🚪',
+    desc: 'Order through DoorDash for delivery or pickup.',
+    url: 'https://www.doordash.com/en-CA/store/vreeland-market-woodhaven-1080228/',
+  },
+  {
+    name: 'Uber Eats',
+    icon: '🛍️',
+    desc: 'Order through Uber Eats for delivery or pickup.',
+    url: 'https://www.ubereats.com/store/vreeland-market/pGhl966cTcCF2c5-yiHNyw',
+  },
+]
 
 const INFO_CARDS = [
   {
@@ -39,19 +63,21 @@ export default function OrderPage() {
         <SectionLabel>Online Ordering</SectionLabel>
         <SectionTitle>Ready when you are.</SectionTitle>
 
-        <div className={`${styles.toastCard} fade-up`}>
-          <div className={styles.toastIcon}>🍕</div>
-          <h3 className={styles.toastHeading}>Order on Toast</h3>
-          <p className={styles.toastBody}>
-            Our full deli menu is available online through Toast — our trusted ordering platform.
-            Place your order ahead and it'll be ready when you arrive.
-          </p>
-          <a href={TOAST_URL} target="_blank" rel="noopener noreferrer">
-            <button className={`btn-primary ${styles.toastBtn}`}>
-              Go to Our Toast Page →
-            </button>
-          </a>
-          <p className={styles.toastNote}>🔒 Secure ordering powered by Toast POS</p>
+        <div className={styles.platformGrid}>
+          {PLATFORMS.map((p) => (
+            <div key={p.name} className={`${styles.platformCard} ${!p.url ? styles.platformDisabled : ''} fade-up`}>
+              <div className={styles.platformIcon}>{p.icon}</div>
+              <h3 className={styles.platformName}>{p.name}</h3>
+              <p className={styles.platformDesc}>{p.desc}</p>
+              {p.url ? (
+                <a href={p.url} target="_blank" rel="noopener noreferrer" className={`btn-primary ${styles.platformBtn}`}>
+                  Order on {p.name} →
+                </a>
+              ) : (
+                <span className={styles.comingSoon}>Coming Soon</span>
+              )}
+            </div>
+          ))}
         </div>
 
         <div className={styles.infoGrid}>

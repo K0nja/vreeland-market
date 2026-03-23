@@ -21,6 +21,8 @@ export default function AdminPage() {
   const [tab, setTab] = useState('home')
   const [heroForm, setHeroForm] = useState(DEFAULT_HERO)
   const [menuForm, setMenuForm] = useState({ categories: [] })
+  const [storeMenuForm, setStoreMenuForm] = useState({ categories: [] })
+  const [socialsForm, setSocialsForm] = useState([])
   const [galleryForm, setGalleryForm] = useState([])
   const [newUrl, setNewUrl] = useState('')
   const [newCaption, setNewCaption] = useState('')
@@ -32,6 +34,8 @@ export default function AdminPage() {
     if (authed) {
       api.getHero().then(d => { setHeroForm(d) }).catch(() => {})
       api.getCatering().then(d => { setMenuForm(JSON.parse(JSON.stringify(d))) }).catch(() => {})
+      api.getMenu().then(d => { setStoreMenuForm(JSON.parse(JSON.stringify(d))) }).catch(() => {})
+      api.getSocials().then(d => { setSocialsForm([...d]) }).catch(() => {})
       api.getGallery().then(d => { setGalleryForm([...d]) }).catch(() => {})
     }
   }, [authed])
@@ -113,6 +117,57 @@ export default function AdminPage() {
     finally { setSaving(false) }
   }
 
+  // ── Store Menu ────────────────────────────────────────────────────────────
+  const updateStoreItem = (catI, itemI, field, value) => {
+    setStoreMenuForm(prev => {
+      const next = JSON.parse(JSON.stringify(prev))
+      next.categories[catI].items[itemI][field] = value
+      return next
+    })
+  }
+  const deleteStoreItem = (catI, itemI) => {
+    setStoreMenuForm(prev => {
+      const next = JSON.parse(JSON.stringify(prev))
+      next.categories[catI].items.splice(itemI, 1)
+      return next
+    })
+  }
+  const addStoreItem = (catI) => {
+    setStoreMenuForm(prev => {
+      const next = JSON.parse(JSON.stringify(prev))
+      next.categories[catI].items.push({ name: '', desc: '', price: '' })
+      return next
+    })
+  }
+  const addStoreCategory = () => {
+    setStoreMenuForm(prev => ({
+      ...prev,
+      categories: [...prev.categories, { category: 'New Category', items: [] }]
+    }))
+  }
+  const deleteStoreCategory = (catI) => {
+    setStoreMenuForm(prev => {
+      const next = JSON.parse(JSON.stringify(prev))
+      next.categories.splice(catI, 1)
+      return next
+    })
+  }
+  const updateStoreCategoryName = (catI, value) => {
+    setStoreMenuForm(prev => {
+      const next = JSON.parse(JSON.stringify(prev))
+      next.categories[catI].category = value
+      return next
+    })
+  }
+  const saveStoreMenu = async () => {
+    setSaving(true); setError('')
+    try {
+      await api.updateMenu(storeMenuForm.categories)
+      showSaved('Menu saved!')
+    } catch (e) { setError(e.message) }
+    finally { setSaving(false) }
+  }
+
   // ── Gallery ───────────────────────────────────────────────────────────────
   const addPhoto = () => {
     if (!newUrl.trim()) return
@@ -178,7 +233,7 @@ export default function AdminPage() {
 
       <div className={styles.layout}>
         <nav className={styles.sidebar}>
-          {[['home', 'Home Page'], ['catering', 'Catering Menu'], ['gallery', 'Gallery']].map(([key, label]) => (
+          {[['home', 'Home Page'], ['menu', 'Deli Menu'], ['catering', 'Catering Menu'], ['gallery', 'Gallery'], ['socials', 'Social Media']].map(([key, label]) => (
             <button
               key={key}
               className={`${styles.navItem} ${tab === key ? styles.navItemActive : ''}`}
@@ -225,6 +280,47 @@ export default function AdminPage() {
               <div className={styles.actions}>
                 <button className={styles.saveBtn} onClick={saveHero} disabled={saving}>
                   {saving ? 'Saving…' : 'Save Home Page'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── Deli Menu Tab ── */}
+          {tab === 'menu' && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Deli Menu</h2>
+
+              {storeMenuForm.categories.map((cat, catI) => (
+                <div key={catI} className={styles.catBlock}>
+                  <div className={styles.catHeader}>
+                    <input
+                      className={styles.catNameInput}
+                      value={cat.category}
+                      onChange={e => updateStoreCategoryName(catI, e.target.value)}
+                    />
+                    <button className={styles.deleteCatBtn} onClick={() => deleteStoreCategory(catI)}>Delete</button>
+                  </div>
+
+                  {cat.items.map((item, itemI) => (
+                    <div key={itemI} className={styles.itemRow}>
+                      <div className={styles.itemFields}>
+                        <input value={item.name} onChange={e => updateStoreItem(catI, itemI, 'name', e.target.value)} placeholder="Item name" />
+                        <input value={item.price} onChange={e => updateStoreItem(catI, itemI, 'price', e.target.value)} placeholder="Price" className={styles.itemPrice} />
+                        <input value={item.desc} onChange={e => updateStoreItem(catI, itemI, 'desc', e.target.value)} placeholder="Description (optional)" className={styles.itemDesc} />
+                      </div>
+                      <button className={styles.deleteItemBtn} onClick={() => deleteStoreItem(catI, itemI)}>✕</button>
+                    </div>
+                  ))}
+
+                  <button className={styles.addItemBtn} onClick={() => addStoreItem(catI)}>+ Add Item</button>
+                </div>
+              ))}
+
+              <button className={styles.addCatBtn} onClick={addStoreCategory}>+ Add Category</button>
+
+              <div className={styles.actions}>
+                <button className={styles.saveBtn} onClick={saveStoreMenu} disabled={saving}>
+                  {saving ? 'Saving…' : 'Save Menu'}
                 </button>
               </div>
             </div>
@@ -312,6 +408,47 @@ export default function AdminPage() {
               <div className={styles.actions}>
                 <button className={styles.saveBtn} onClick={saveGallery} disabled={saving}>
                   {saving ? 'Saving…' : 'Save Gallery'}
+                </button>
+              </div>
+            </div>
+          )}
+          {/* ── Social Media Tab ── */}
+          {tab === 'socials' && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Social Media</h2>
+              <p className={styles.hint}>Update links anytime. Leave a URL blank to hide that platform.</p>
+
+              {socialsForm.map((s, i) => (
+                <div key={i} className={styles.itemRow}>
+                  <div className={styles.itemFields}>
+                    <input
+                      value={s.label}
+                      onChange={e => setSocialsForm(prev => prev.map((x, j) => j === i ? { ...x, label: e.target.value } : x))}
+                      placeholder="Platform name"
+                    />
+                    <input
+                      value={s.url}
+                      onChange={e => setSocialsForm(prev => prev.map((x, j) => j === i ? { ...x, url: e.target.value } : x))}
+                      placeholder="URL"
+                      className={styles.itemDesc}
+                    />
+                  </div>
+                  <button className={styles.deleteItemBtn} onClick={() => setSocialsForm(prev => prev.filter((_, j) => j !== i))}>✕</button>
+                </div>
+              ))}
+
+              <button className={styles.addCatBtn} onClick={() => setSocialsForm(prev => [...prev, { label: '', url: '' }])}>
+                + Add Platform
+              </button>
+
+              <div className={styles.actions}>
+                <button className={styles.saveBtn} onClick={async () => {
+                  setSaving(true); setError('')
+                  try { await api.updateSocials(socialsForm); showSaved('Social links saved!') }
+                  catch (e) { setError(e.message) }
+                  finally { setSaving(false) }
+                }} disabled={saving}>
+                  {saving ? 'Saving…' : 'Save Social Links'}
                 </button>
               </div>
             </div>

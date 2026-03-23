@@ -1,5 +1,5 @@
 .banner {
-  background: var(--green);
+  background: var(--red);
   color: #fff;
   text-align: center;
   padding: 14px 24px;
@@ -36,8 +36,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 65% 40%, rgba(200, 146, 42, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 80%, rgba(43, 61, 44, 0.45) 0%, transparent 55%);
+    radial-gradient(ellipse at 65% 40%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(17, 17, 17, 0.6) 0%, transparent 55%);
   pointer-events: none;
 }
 
@@ -49,8 +49,8 @@
 
 .heroEyebrow {
   display: inline-block;
-  background: rgba(200, 146, 42, 0.15);
-  border: 1px solid rgba(200, 146, 42, 0.4);
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.4);
   border-radius: 100px;
   color: var(--amber);
   font-size: 0.73rem;
@@ -268,7 +268,7 @@
 }
 
 .pwCancel {
-  background: #f0ede8;
+  background: #EEF2FF;
   color: var(--ink);
   border: none;
   font-family: var(--font-body);

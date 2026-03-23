@@ -31,18 +31,19 @@
   width: 120px;
   flex-shrink: 0;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--amber);
   text-align: right;
   padding-top: 4px;
+  padding-right: 24px;
   position: relative;
 }
 
 .tlYear::after {
   content: '';
   position: absolute;
-  right: -7px;
+  right: -1px;
   top: 9px;
   width: 12px;
   height: 12px;

@@ -13,7 +13,7 @@
 .timeline::before {
   content: '';
   position: absolute;
-  left: 88px;
+  left: 120px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -28,7 +28,7 @@
 }
 
 .tlYear {
-  width: 88px;
+  width: 120px;
   flex-shrink: 0;
   font-family: var(--font-display);
   font-size: 1rem;
@@ -42,7 +42,7 @@
 .tlYear::after {
   content: '';
   position: absolute;
-  right: -6px;
+  right: -7px;
   top: 9px;
   width: 12px;
   height: 12px;
@@ -123,13 +123,13 @@
 
 @media (max-width: 700px) {
   .timeline::before {
-    left: 0;
+    left: 16px;
   }
 
   .tlItem {
     flex-direction: column;
     gap: 6px;
-    padding-left: 24px;
+    padding-left: 40px;
   }
 
   .tlYear {
@@ -138,7 +138,7 @@
   }
 
   .tlYear::after {
-    left: -24px;
+    left: -30px;
     right: auto;
   }
 

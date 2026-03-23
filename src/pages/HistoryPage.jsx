@@ -3,7 +3,7 @@ import timeline from '../data/timeline'
 import styles from './HistoryPage.module.css'
 
 const STATS = [
-  ['35+', 'Years in Business'],
+  ['1985', 'Est. by the Konja Family'],
   ['500+', 'Wines in Stock'],
   ['#1',  'Craft Beer Selection Downriver'],
   ['1',   'Family, Always'],
@@ -15,10 +15,10 @@ export default function HistoryPage() {
       <div className={`${styles.hero} page-hero`} style={{ background: 'var(--ink)' }}>
         <div className={styles.heroInner}>
           <div className="page-hero__eyebrow page-hero__eyebrow--amber">Our Story</div>
-          <h1 style={{ color: '#fff' }}>35+ Years Serving Woodhaven</h1>
+          <h1 style={{ color: '#fff' }}>40 Years on Allen Road</h1>
           <p style={{ color: '#999' }}>
-            From a small corner store to a Downriver institution — the Vreeland story is one of
-            family, community, and a genuine love of great food and drink.
+            Since 1985, the Konja family has built Vreeland Market into a Downriver institution —
+            through great food, craft beer, bourbon, and a genuine love of community.
           </p>
         </div>
       </div>
